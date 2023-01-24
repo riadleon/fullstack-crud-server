@@ -22,12 +22,7 @@ async function run() {
 
 
 
-        // app.get('/sectors', async (req, res) => {
-        //     const query = {}
-        //     const cursor = sectorCollection.find(query);
-        //     const sectors = await cursor.toArray();
-        //     res.send(sectors);
-        // });
+       
 
         app.post('/users', async (req, res) => {
             const store = req.body;
@@ -50,44 +45,21 @@ async function run() {
             res.send(store);
         });
 
-        // app.patch('/storing/:id', async (req, res) => {
-        //     const { id } = req.params;
-
-        //     try {
-        //         const result = await storedCollection.updateOne({ _id: ObjectId(id) }, { $set: req.body });
-
-        //         if (result.matchedCount) {
-        //             res.send({
-        //                 success: true,
-        //                 message: `successfully updated ${req.body.name}`,
-        //             });
-        //         } else {
-        //             res.send({
-        //                 success: false,
-        //                 error: "Couldn't update  ",
-        //             });
-        //         }
-        //     } catch (error) {
-        //         res.send({
-        //             success: false,
-        //             error: error.message,
-        //         });
-        //     }
-        // });
-        // app.put('/storing/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const filter = { _id: ObjectId(id) };
-        //     const user = req.body;
-        //     const option = { upsert: true };
-        //     const updatedUser = {
-        //         $set: {
-        //             name: user.name,
-        //             sectors: user.sectors
-        //         }
-        //     };
-        //     const result = await storedCollection.updateOne(filter, updatedUser, option);
-        //     res.send(result);
-        // });
+        app.put('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const user = req.body;
+            const option = { upsert: true };
+            const updatedUser = {
+                $set: {
+                    first: user.first,
+                    last: user.last,
+                    ph:user.ph
+                }
+            };
+            const result = await userCollection.updateOne(filter, updatedUser, option);
+            res.send(result);
+        });
 
 
 
