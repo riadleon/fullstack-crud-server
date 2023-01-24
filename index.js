@@ -22,7 +22,7 @@ async function run() {
 
 
 
-       
+
 
         app.post('/users', async (req, res) => {
             const store = req.body;
@@ -54,10 +54,16 @@ async function run() {
                 $set: {
                     first: user.first,
                     last: user.last,
-                    ph:user.ph
+                    ph: user.ph
                 }
             };
             const result = await userCollection.updateOne(filter, updatedUser, option);
+            res.send(result);
+        });
+        app.delete('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await userCollection.deleteOne(query);
             res.send(result);
         });
 
